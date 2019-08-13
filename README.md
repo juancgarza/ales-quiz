@@ -1,5 +1,5 @@
 # alesquiz
-
+Project for Vue.js practice and b-day present for gf
 ## Project setup
 ```
 npm install
