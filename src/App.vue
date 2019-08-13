@@ -1,28 +1,51 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <Header />
+    <QuestionBox
+      :question="records[index]"
+      :next="next"
+    />
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import Header from '@/components/Header.vue'
+import QuestionBox from '@/components/QuestionBox.vue'
+import axios from 'axios';
 
 export default {
   name: 'app',
   components: {
-    HelloWorld
+    Header,
+    QuestionBox
+  },
+  data: function () {
+    return {
+      apiUrl: 'https://api.airtable.com/v0/',
+      base: 'appg6cNTfOGeUe50e/Table%201',
+      apiKey: process.env.VUE_APP_AIRTABLE_KEY,
+      records: [],
+      index: 0
+    };
+  },
+  mounted: function () {
+    this.getData();
+  },
+  methods: {
+    getData: function () {
+      axios({
+        url: this.apiUrl + this.base,
+        headers: {
+          'Authorization': `Bearer ${this.apiKey}`
+        }
+      }).then((res) => {
+        this.records = res.data.records;
+      });
+    },
+    next: function() {
+      this.index++
+    }
   }
 }
 </script>
 
-<style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
