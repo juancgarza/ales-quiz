@@ -1,9 +1,13 @@
 <template>
   <div id="app">
-    <Header />
+    <Header
+      :numCorrect="numCorrect"
+      :numTotal="numTotal"
+     />
     <QuestionBox
-      :question="records[index]"
+      :currentQuestion="records[index]"
       :next="next"
+      :increment="increment"
     />
   </div>
 </template>
@@ -25,7 +29,9 @@ export default {
       base: 'appg6cNTfOGeUe50e/Table%201',
       apiKey: process.env.VUE_APP_AIRTABLE_KEY,
       records: [],
-      index: 0
+      index: 0,
+      numCorrect: 0,
+      numTotal: 0
     };
   },
   mounted: function () {
@@ -44,6 +50,12 @@ export default {
     },
     next: function() {
       this.index++
+    },
+    increment(isCorrect) {
+      if (isCorrect) {
+        this.numCorrect++
+      }
+      this.numTotal++
     }
   }
 }
