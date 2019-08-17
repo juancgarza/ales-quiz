@@ -5,8 +5,17 @@
         <b>Ale's Awesome Quiz App!</b>
       </b-nav-item>
       <b-nav-item disabled>
-        Count: 2/5
+        Count: {{ numCorrect }}/{{ numTotal }}
       </b-nav-item>
     </b-nav>
   </div>
 </template>
+
+<script>
+export default {
+  props: [
+    'numCorrect',
+    'numTotal'
+  ]
+}
+</script>
